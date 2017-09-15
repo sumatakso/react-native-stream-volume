@@ -10,7 +10,11 @@ export default {
         // iOS
        RNVolume.getVolume(callback);
     },
-
+    adjustVolume: (callback)=>{
+        if(Platform.OS == 'android'){
+            RNVolume.adjustVolume(callback);
+        }
+    },
     setVolume: (value,onVolumeChangeNotification) => {
         onVolumeChangeNotification = (typeof onVolumeChangeNotification == "undefined") ? true : false;
 
@@ -30,6 +34,4 @@ export default {
         const VolumeListener = new NativeEventEmitter(NativeModules.RNVolume)
         VolumeListener.addListener('onVolumeChange', callback)
     },
-
-
 } ;

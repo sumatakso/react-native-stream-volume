@@ -45,11 +45,12 @@ public class RNVolumeModule extends ReactContextBaseJavaModule{
      * <= Build.VERSION_CODES.M api devince
      */
     @ReactMethod
-    public void adjustVolume(){
+    public void adjustVolume(Callback callback){
         if(isAttachOnMusic) {
             audio.setStreamVolume(AudioManager.STREAM_VOICE_CALL,
                 audio.getStreamVolume(AudioManager.STREAM_MUSIC), 0);
         }
+        callback.invoke();
     }
 
     @ReactMethod
