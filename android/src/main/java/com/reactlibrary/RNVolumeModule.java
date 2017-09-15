@@ -92,11 +92,16 @@ public class RNVolumeModule extends ReactContextBaseJavaModule{
                 uri.compareTo(Uri.parse("content://settings/system/volume_music_speaker")) == 0 ||
                 uri.compareTo(Uri.parse("content://settings/system/volume_music_hdmi")) == 0) {
                     AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-                    float currentVolume = audio.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
-                    float maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL);
+                    float currentVolume = 0;
+                    float maxVolume = 0;
                     if(isAttachOnMusic){
                         currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
                         maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                        audio.setStreamVolume(AudioManager.STREAM_VOICE_CALL,
+                                audio.getStreamVolume(AudioManager.STREAM_MUSIC), 0);
+                    }else{
+                        currentVolume = audio.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
+                        maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL);
                     }
                     //Log.d("TEST now " , String.valueOf(currentVolume/maxVolume));
                     if (mJSModule == null) {
